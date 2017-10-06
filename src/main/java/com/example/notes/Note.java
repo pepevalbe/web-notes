@@ -18,16 +18,22 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author pepe
  */
 @Entity
-@Table(catalog = "pepedatabase", schema = "public")
+@Table(catalog = "webnotesdb", schema = "public")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Notes.findAll", query = "SELECT n FROM Notes n")})
-public class Notes implements Serializable {
+    @NamedQuery(name = "Note.findAll", query = "SELECT n FROM Note n")
+    , @NamedQuery(name = "Note.findById", query = "SELECT n FROM Note n WHERE n.id = :id")
+    , @NamedQuery(name = "Note.findByDate", query = "SELECT n FROM Note n WHERE n.date = :date")
+    , @NamedQuery(name = "Note.findByText", query = "SELECT n FROM Note n WHERE n.text = :text")
+    , @NamedQuery(name = "Note.findByWriter", query = "SELECT n FROM Note n WHERE n.writer = :writer")})
+public class Note implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,17 +41,31 @@ public class Notes implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Long id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private Date date;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(nullable = false, length = 2147483647)
+    private String text;
     @Size(max = 2147483647)
     @Column(length = 2147483647)
-    private String descripcion;
+    private String writer;
 
-    public Notes() {
+    public Note() {
     }
 
-    public Notes(Long id) {
+    public Note(Long id) {
         this.id = id;
+    }
+
+    public Note(Long id, Date date, String text) {
+        this.id = id;
+        this.date = date;
+        this.text = text;
     }
 
     public Long getId() {
@@ -56,20 +76,28 @@ public class Notes implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getDate() {
+        return date;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getText() {
+        return text;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 
     @Override
@@ -82,10 +110,10 @@ public class Notes implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Notes)) {
+        if (!(object instanceof Note)) {
             return false;
         }
-        Notes other = (Notes) object;
+        Note other = (Note) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +122,7 @@ public class Notes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.example.notes.Notes[ id=" + id + " ]";
+        return "com.example.notes.Note[ id=" + id + " ]";
     }
     
 }

@@ -11,6 +11,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author pepe
  */
-public interface NotesRepository extends CrudRepository<Notes, Long> {
+public interface NoteRepository extends CrudRepository<Note, Long> {
     
 }
