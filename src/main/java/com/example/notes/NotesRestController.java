@@ -31,31 +31,51 @@ public class NotesRestController {
     NotesRepository notesRepository;
     
     @RequestMapping(method = GET)
-    public List<Notes> list() {
-        return (List<Notes>) notesRepository.findAll();
+    public ResponseEntity<List<Notes>> list() {
+        List<Notes> notes = (List<Notes>) notesRepository.findAll();
+        if (notes.isEmpty()) {            
+            return new ResponseEntity<List<Notes>>(HttpStatus.NO_CONTENT);
+        }
+        else {         
+            return new ResponseEntity<List<Notes>>(notes, HttpStatus.OK);
+        }
     }
     
     @RequestMapping(value = "/{id}", method = GET)
-    public Notes get(@PathVariable String id) {
-        return notesRepository.findOne(new Long(id));
+    public ResponseEntity<Notes> get(@PathVariable String id) {
+        Notes note = notesRepository.findOne(new Long(id));
+        if (note == null) {            
+            return new ResponseEntity<Notes>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<Notes>(note, HttpStatus.OK);
+        }
     }
     
     @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<Notes> put(@PathVariable String id, @RequestBody Notes input) {
+    public ResponseEntity<Notes> put(@PathVariable String id, @RequestBody Notes input) {        
         notesRepository.save(input);
-        return null;
+        return new ResponseEntity<Notes>(HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{id}", method = POST)
-    public ResponseEntity<Notes> post(@PathVariable String id, @RequestBody Notes input) {
-        notesRepository.save(input);
-        return null;
+    public ResponseEntity<Notes> post(@PathVariable String id, @RequestBody Notes input) {        
+        if (notesRepository.existsById(new Long(id) || input.getId() != new Long(id)) {
+			return new ResponseEntity<Notes>(HttpStatus.CONFLICT);
+		}
+		notesRepository.save(input);
+		return new ResponseEntity<Notes>(HttpStatus.CREATED);
     }
     
     @RequestMapping(value = "/{id}", method = DELETE)
     public ResponseEntity<Notes> delete(@PathVariable String id) {
-        notesRepository.delete(new Long(id));
-        return null;
+        if (notesRepository.existsById(new Long(id)) {
+            notesRepository.delete(new Long(id));
+            return new ResponseEntity<Notes>(HttpStatus.OK);
+        }
+        else {         
+            return new ResponseEntity<Notes>(HttpStatus.NOT_FOUND);
+        }
     }
     
 }
