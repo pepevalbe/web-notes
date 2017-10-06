@@ -7,6 +7,7 @@ package com.example.notes;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,10 +35,10 @@ public class NotesRestController {
     public ResponseEntity<List<Notes>> list() {
         List<Notes> notes = (List<Notes>) notesRepository.findAll();
         if (notes.isEmpty()) {            
-            return new ResponseEntity<List<Notes>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else {         
-            return new ResponseEntity<List<Notes>>(notes, HttpStatus.OK);
+            return new ResponseEntity<>(notes, HttpStatus.OK);
         }
     }
     
@@ -45,36 +46,36 @@ public class NotesRestController {
     public ResponseEntity<Notes> get(@PathVariable String id) {
         Notes note = notesRepository.findOne(new Long(id));
         if (note == null) {            
-            return new ResponseEntity<Notes>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else {
-            return new ResponseEntity<Notes>(note, HttpStatus.OK);
+            return new ResponseEntity<>(note, HttpStatus.OK);
         }
     }
     
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<Notes> put(@PathVariable String id, @RequestBody Notes input) {        
         notesRepository.save(input);
-        return new ResponseEntity<Notes>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{id}", method = POST)
     public ResponseEntity<Notes> post(@PathVariable String id, @RequestBody Notes input) {        
-        if (notesRepository.existsById(new Long(id) || input.getId() != new Long(id)) {
-			return new ResponseEntity<Notes>(HttpStatus.CONFLICT);
+        if (notesRepository.exists(new Long(id)) || input.getId() != new Long(id)) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		notesRepository.save(input);
-		return new ResponseEntity<Notes>(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
     @RequestMapping(value = "/{id}", method = DELETE)
     public ResponseEntity<Notes> delete(@PathVariable String id) {
-        if (notesRepository.existsById(new Long(id)) {
+        if (notesRepository.exists(new Long(id))) {
             notesRepository.delete(new Long(id));
-            return new ResponseEntity<Notes>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         else {         
-            return new ResponseEntity<Notes>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     
