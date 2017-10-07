@@ -49,10 +49,10 @@ public class Note implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Column(nullable = false, length = 500)
     private String text;
     @Size(max = 2147483647)
-    @Column(length = 2147483647)
+    @Column(length = 100)
     private String writer;
 
     public Note() {
