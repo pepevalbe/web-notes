@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.pepe.notes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
