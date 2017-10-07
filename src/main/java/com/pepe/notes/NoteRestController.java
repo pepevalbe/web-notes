@@ -25,7 +25,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
  * @author pepe
  */
 @RestController
-@RequestMapping("/url")
+@RequestMapping("/note")
 public class NoteRestController {
     
     @Autowired
@@ -53,19 +53,19 @@ public class NoteRestController {
         }
     }
     
-    @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<Note> put(@PathVariable String id, @RequestBody Note input) {        
+    @RequestMapping(method = PUT)
+    public ResponseEntity<Note> put(@RequestBody Note input) {
         noteRepository.save(input);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{id}", method = POST)
     public ResponseEntity<Note> post(@PathVariable String id, @RequestBody Note input) {        
-        if (noteRepository.exists(new Long(id)) || input.getId() != new Long(id)) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
-		}
-		noteRepository.save(input);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+        if (noteRepository.exists(new Long(id)) || !input.getId().equals(new Long(id))) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        noteRepository.save(input);
+	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
     @RequestMapping(value = "/{id}", method = DELETE)
