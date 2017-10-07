@@ -1,0 +1,1 @@
+web java -Dserver.port=$PORT $JAVA_OPTS -Dspring.profiles.active=heroku -jar target/notes-0.0.1-SNAPSHOT.jar
