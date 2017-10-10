@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,8 +69,8 @@ public class NoteRestController {
 	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/{id}", method = DELETE)
-    public ResponseEntity<Note> delete(@PathVariable String id) {
+    @RequestMapping(method = DELETE)
+    public ResponseEntity<Note> delete(@RequestParam("id") String id) {
         if (noteRepository.exists(new Long(id))) {
             noteRepository.delete(new Long(id));
             return new ResponseEntity<>(HttpStatus.OK);
