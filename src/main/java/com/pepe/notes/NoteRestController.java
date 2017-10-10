@@ -32,7 +32,7 @@ public class NoteRestController {
     @Autowired
     NoteRepository noteRepository;
     
-    @RequestMapping(method = GET)
+  /*  @RequestMapping(method = GET)
     public ResponseEntity<List<Note>> list() {
         List<Note> note = (List<Note>) noteRepository.findAll();
         if (note.isEmpty()) {            
@@ -41,7 +41,7 @@ public class NoteRestController {
         else {         
             return new ResponseEntity<>(note, HttpStatus.OK);
         }
-    }
+    }*/
     
     @RequestMapping(method = GET)
     public ResponseEntity<Note> get(@RequestParam("id") String id) {
@@ -60,8 +60,8 @@ public class NoteRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @RequestMapping(method = POST)
-    public ResponseEntity<Note> post(@RequestParam("id") String id, @RequestBody Note input) {        
+    @RequestMapping(value = "/{id}", method = POST)
+    public ResponseEntity<Note> post(@PathVariable String id, @RequestBody Note input) {        
         if (noteRepository.exists(new Long(id)) || !input.getId().equals(new Long(id))) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
