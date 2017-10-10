@@ -37,23 +37,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Note implements Serializable {
 
     private static final long serialVersionUID = 1L;
+ 	
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
     @GeneratedValue
+    @Column(nullable = false)    
     private Long id;
-    @Basic(optional = false)
+    
     @NotNull
-    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date date;
-    @Basic(optional = false)
+    
     @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(min = 1, max = 500)
     @Column(nullable = false, length = 500)
     private String text;
-    @Size(max = 2147483647)
+    
+    @Size(max = 100)
     @Column(length = 100)
     private String writer;
 
