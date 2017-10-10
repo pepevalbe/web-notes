@@ -43,8 +43,8 @@ public class NoteRestController {
         }
     }
     
-    @RequestMapping(value = "/{id}", method = GET)
-    public ResponseEntity<Note> get(@PathVariable String id) {
+    @RequestMapping(method = GET)
+    public ResponseEntity<Note> get(@RequestParam("id") String id) {
         Note note = noteRepository.findOne(new Long(id));
         if (note == null) {            
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,8 +60,8 @@ public class NoteRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/{id}", method = POST)
-    public ResponseEntity<Note> post(@PathVariable String id, @RequestBody Note input) {        
+    @RequestMapping(method = POST)
+    public ResponseEntity<Note> post(@RequestParam("id") String id, @RequestBody Note input) {        
         if (noteRepository.exists(new Long(id)) || !input.getId().equals(new Long(id))) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
