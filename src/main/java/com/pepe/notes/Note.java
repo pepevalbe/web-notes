@@ -60,6 +60,7 @@ public class Note implements Serializable {
     public Note() {
     }
 
+    /*
     public Note(Long id) {
         this.id = id;
     }
@@ -68,6 +69,17 @@ public class Note implements Serializable {
         this.id = id;
         this.date = date;
         this.text = text;
+    }*/
+        
+    public Note(Date date, String text) {
+        this.date = date;
+        this.text = text;
+    }
+        
+    public Note(Long id, Date date, String text, String writer) {
+        this.date = date;
+        this.text = text;
+        this.writer = writer;
     }
 
     public Long getId() {
