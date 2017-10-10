@@ -5,6 +5,7 @@
  */
 package com.pepe.notes;
 
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.data.repository.CrudRepository;
  * @author pepe
  */
 public interface NoteRepository extends CrudRepository<Note, Long> {
+    List<Note> findByWriter(String writer);
     
 }

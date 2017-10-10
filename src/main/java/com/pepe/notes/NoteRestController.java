@@ -31,18 +31,7 @@ public class NoteRestController {
     
     @Autowired
     NoteRepository noteRepository;
-    
-    @RequestMapping(path ="/all", method = GET)
-    public ResponseEntity<List<Note>> list() {
-        List<Note> notes = (List<Note>) noteRepository.findAll();
-        if (notes.isEmpty()) {            
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        else {         
-            return new ResponseEntity<>(notes, HttpStatus.OK);
-        }
-    }
-    
+        
     @RequestMapping(method = GET)
     public ResponseEntity<Note> get(@RequestParam("id") String id) {
         Note note = noteRepository.findOne(new Long(id));
@@ -87,4 +76,25 @@ public class NoteRestController {
         }
     }
     
+    @RequestMapping(path ="/find/all", method = GET)
+    public ResponseEntity<List<Note>> findAll() {
+        List<Note> notes = (List<Note>) noteRepository.findAll();
+        if (notes.isEmpty()) {            
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {         
+            return new ResponseEntity<>(notes, HttpStatus.OK);
+        }
+    }
+    
+    @RequestMapping(path ="/find", method = GET)
+    public ResponseEntity<List<Note>> findByWriter(@RequestParam("writer") String writer) {
+        List<Note> notes = (List<Note>) noteRepository.findByWriter(writer);
+        if (notes.isEmpty()) {            
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {         
+            return new ResponseEntity<>(notes, HttpStatus.OK);
+        }
+    }
 }
