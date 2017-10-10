@@ -60,8 +60,8 @@ public class NoteRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/{id}", method = POST)
-    public ResponseEntity<Note> post(@PathVariable String id, @RequestBody Note input) {        
+    @RequestMapping(method = POST)
+    public ResponseEntity<Note> post(@RequestParam("id") String id, @RequestBody Note input) {        
         if (noteRepository.exists(new Long(id)) || !input.getId().equals(new Long(id))) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
