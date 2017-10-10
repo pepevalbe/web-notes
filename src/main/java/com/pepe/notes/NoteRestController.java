@@ -32,7 +32,7 @@ public class NoteRestController {
     @Autowired
     NoteRepository noteRepository;
     
-  /*  @RequestMapping(method = GET)
+    @RequestMapping(path ="/all", method = GET)
     public ResponseEntity<List<Note>> list() {
         List<Note> note = (List<Note>) noteRepository.findAll();
         if (note.isEmpty()) {            
@@ -41,7 +41,7 @@ public class NoteRestController {
         else {         
             return new ResponseEntity<>(note, HttpStatus.OK);
         }
-    }*/
+    }
     
     @RequestMapping(method = GET)
     public ResponseEntity<Note> get(@RequestParam("id") String id) {
