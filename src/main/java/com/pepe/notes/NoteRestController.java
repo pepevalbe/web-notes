@@ -34,12 +34,12 @@ public class NoteRestController {
     
     @RequestMapping(path ="/all", method = GET)
     public ResponseEntity<List<Note>> list() {
-        List<Note> note = (List<Note>) noteRepository.findAll();
-        if (note.isEmpty()) {            
+        List<Note> notes = (List<Note>) noteRepository.findAll();
+        if (notes.isEmpty()) {            
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else {         
-            return new ResponseEntity<>(note, HttpStatus.OK);
+            return new ResponseEntity<>(notes, HttpStatus.OK);
         }
     }
     
@@ -56,17 +56,24 @@ public class NoteRestController {
     
     @RequestMapping(method = PUT)
     public ResponseEntity<Note> put(@RequestBody Note input) {
-        noteRepository.save(input);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (input.getId() != null && !noteRepository.exists(input.getId())) {
+            return new ResponseEntity<>(input, HttpStatus.NOT_FOUND);
+        }    
+        else {
+            Note output = noteRepository.save(input);
+            return new ResponseEntity<>(output, HttpStatus.OK);
+        }
     }
     
     @RequestMapping(method = POST)
-    public ResponseEntity<Note> post(@RequestParam("id") String id, @RequestBody Note input) {        
-        if (noteRepository.exists(new Long(id)) || !input.getId().equals(new Long(id))) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+    public ResponseEntity<Note> post(@RequestBody Note input) {        
+        if (input.getId() != null && noteRepository.exists(input.getId())) {
+            return new ResponseEntity<>(input, HttpStatus.CONFLICT);
         }
-        noteRepository.save(input);
-	return new ResponseEntity<>(HttpStatus.CREATED);
+        else {
+            Note output = noteRepository.save(input);
+            return new ResponseEntity<>(output, HttpStatus.CREATED);
+        }
     }
     
     @RequestMapping(method = DELETE)
