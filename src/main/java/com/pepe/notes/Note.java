@@ -40,6 +40,7 @@ public class Note implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
+    @GeneratedValue
     private Long id;
     @Basic(optional = false)
     @NotNull
