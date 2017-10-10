@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +42,8 @@ public class NoteRestController {
         }
     }
     
-    @RequestMapping(value = "/{id}", method = GET)
-    public ResponseEntity<Note> get(@PathVariable String id) {
+    @RequestMapping(method = GET)
+    public ResponseEntity<Note> get(@RequestParam(value="id") String id) {
         Note note = noteRepository.findOne(new Long(id));
         if (note == null) {            
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,8 +59,8 @@ public class NoteRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/{id}", method = POST)
-    public ResponseEntity<Note> post(@PathVariable String id, @RequestBody Note input) {        
+    @RequestMapping(method = POST)
+    public ResponseEntity<Note> post(@RequestParam(value="id") String id, @RequestBody Note input) {        
         if (noteRepository.exists(new Long(id)) || !input.getId().equals(new Long(id))) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -68,8 +68,8 @@ public class NoteRestController {
 	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/{id}", method = DELETE)
-    public ResponseEntity<Note> delete(@PathVariable String id) {
+    @RequestMapping(method = DELETE)
+    public ResponseEntity<Note> delete(@RequestParam(value="id") String id) {
         if (noteRepository.exists(new Long(id))) {
             noteRepository.delete(new Long(id));
             return new ResponseEntity<>(HttpStatus.OK);
