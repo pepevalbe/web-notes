@@ -49,6 +49,9 @@ public class NoteRestController {
             return new ResponseEntity<>(input, HttpStatus.NOT_FOUND);
         }    
         else {
+            if (input.getDate() == null) {
+                input.setDate(new Date(System.currentTimeMillis()));
+            }
             Note output = noteRepository.save(input);
             return new ResponseEntity<>(output, HttpStatus.OK);
         }
@@ -60,6 +63,9 @@ public class NoteRestController {
             return new ResponseEntity<>(input, HttpStatus.CONFLICT);
         }
         else {
+            if (input.getDate() == null) {
+                input.setDate(new Date(System.currentTimeMillis()));
+            }
             Note output = noteRepository.save(input);
             return new ResponseEntity<>(output, HttpStatus.CREATED);
         }
