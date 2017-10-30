@@ -5,14 +5,17 @@
  */
 package com.pepe.notes;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author pepe
  */
 public interface NoteRepository extends CrudRepository<Note, Long> {
-    List<Note> findByWriter(String writer);
+    List<Note> findByWriter(@Param("writer") String writer);
+    List<Note> findByDate(@Param("date") Date date);
     
 }

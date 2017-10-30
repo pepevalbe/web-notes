@@ -83,25 +83,24 @@ public class NoteRestController {
         }
     }
     
-    @RequestMapping(path ="/find/all", method = GET)
-    public ResponseEntity<List<Note>> findAll() {
-        List<Note> notes = (List<Note>) noteRepository.findAll();
+    @RequestMapping(path ="/find", method = GET)
+    public ResponseEntity<List<Note>> find(@RequestParam(value = "writer", required=false) String writer, @RequestParam(value = "date", required=false) Date date) {
+        List<Note> notes = null;
+        if (writer != null) {
+            notes = (List<Note>) noteRepository.findByWriter(writer);
+        }
+        else if(date !=null) {
+            notes = (List<Note>) noteRepository.findByDate(date);
+        }
+        else {
+            notes = (List<Note>) noteRepository.findAll();
+        }
+        
         if (notes.isEmpty()) {            
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else {         
             return new ResponseEntity<>(notes, HttpStatus.OK);
-        }
-    }
-    
-    @RequestMapping(path ="/find", method = GET)
-    public ResponseEntity<List<Note>> findByWriter(@RequestParam("writer") String writer) {
-        List<Note> notes = (List<Note>) noteRepository.findByWriter(writer);
-        if (notes.isEmpty()) {            
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {         
-            return new ResponseEntity<>(notes, HttpStatus.OK);
-        }
-    }
+        }      
+    } 
 }
