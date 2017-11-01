@@ -6,7 +6,7 @@
 package com.pepe.notes;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,7 +41,6 @@ public class Note implements Serializable {
     private Long id;
     
     @NotNull
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date date;
     
@@ -58,17 +55,16 @@ public class Note implements Serializable {
 
     public Note() {
     }
-
-    /*
-    public Note(Long id) {
-        this.id = id;
-    }
-
-    public Note(Long id, Date date, String text) {
-        this.id = id;
-        this.date = date;
-        this.text = text;
-    }*/
+    
+//    public Note(Long id) {
+//        this.id = id;
+//    }
+//
+//    public Note(Long id, Date date, String text) {
+//        this.id = id;
+//        this.date = date;
+//        this.text = text;
+//    }
         
     public Note(Date date, String text) {
         this.date = date;

@@ -6,12 +6,11 @@
 package com.pepe.notes;
 
 import java.util.List;
-import java.util.Date;
+import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,7 @@ public class NoteRestController {
     
     @Autowired
     NoteRepository noteRepository;
-        
+   
     @RequestMapping(method = GET)
     public ResponseEntity<Note> get(@RequestParam("id") String id) {
         Note note = noteRepository.findOne(new Long(id));
@@ -84,7 +83,7 @@ public class NoteRestController {
     
     @RequestMapping(path ="/find", method = GET)
     public ResponseEntity<List<Note>> find(@RequestParam(value = "writer", required=false) String writer, @RequestParam(value = "date", required=false) Date date) {
-        List<Note> notes = null;
+        List<Note> notes;
         if (writer != null) {
             notes = (List<Note>) noteRepository.findByWriter(writer);
         }
