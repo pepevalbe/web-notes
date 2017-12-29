@@ -7,6 +7,7 @@ package com.pepe.notes;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +43,10 @@ public class Note implements Serializable {
     
     @NotNull
     @Column(nullable = false)
+    private Timestamp timestamp;
+
+    @NotNull
+    @Column(nullable = false)
     private Date date;
     
     @NotNull
@@ -53,26 +58,11 @@ public class Note implements Serializable {
     @Column(length = 100)
     private String writer;
 
-    public Note() {
-    }
-    
-//    public Note(Long id) {
-//        this.id = id;
-//    }
-//
-//    public Note(Long id, Date date, String text) {
-//        this.id = id;
-//        this.date = date;
-//        this.text = text;
-//    }
-        
-    public Note(Date date, String text) {
-        this.date = date;
+    public Note(String text) {
         this.text = text;
     }
         
-    public Note(Date date, String text, String writer) {
-        this.date = date;
+    public Note(String text, String writer) {
         this.text = text;
         this.writer = writer;
     }
@@ -83,6 +73,14 @@ public class Note implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Date getDate() {

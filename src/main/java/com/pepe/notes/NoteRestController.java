@@ -7,6 +7,7 @@ package com.pepe.notes;
 
 import java.util.List;
 import java.sql.Date;
+import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -48,9 +49,8 @@ public class NoteRestController {
             return new ResponseEntity<>(input, HttpStatus.NOT_FOUND);
         }    
         else {
-            if (input.getDate() == null) {
-                input.setDate(new Date(System.currentTimeMillis()));
-            }
+            input.setTimestamp(new Timestamp(System.currentTimeMillis()));
+            input.setDate(new Date(System.currentTimeMillis()));
             Note output = noteRepository.save(input);
             return new ResponseEntity<>(output, HttpStatus.OK);
         }
@@ -62,9 +62,8 @@ public class NoteRestController {
             return new ResponseEntity<>(input, HttpStatus.CONFLICT);
         }
         else {
-            if (input.getDate() == null) {
-                input.setDate(new Date(System.currentTimeMillis()));
-            }
+            input.setTimestamp(new Timestamp(System.currentTimeMillis()));
+            input.setDate(new Date(System.currentTimeMillis()));
             Note output = noteRepository.save(input);
             return new ResponseEntity<>(output, HttpStatus.CREATED);
         }
