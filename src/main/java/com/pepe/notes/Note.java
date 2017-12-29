@@ -58,6 +58,9 @@ public class Note implements Serializable {
     @Column(length = 100)
     private String writer;
 
+    public Note() {
+    }
+
     public Note(String text) {
         this.text = text;
     }
