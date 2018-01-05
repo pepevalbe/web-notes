@@ -9,18 +9,18 @@ and open the template in the editor.
         <title>Web Notes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
     </head>
-    <body onload="updateList()">        
-        <script type="text/javascript" src="js/restClient.js"></script>
-        <h2>Lista de la compra Inma y Pepe<strong><br/></strong></h2>
-        <input type="text" id="text" value="">
-        <button onclick="addText()">Añadir elemento</button>
-        <button hidden onclick="showAll()">Find All</button>
-        <button onclick="removeLast()">Borrar último</button>
-        <button onclick="updateList()">Actualizar</button>
-        <ul id="list" style="list-style-type:none">
-        </ul>
-        <script>function showAll(){document.getElementById("output").innerHTML = findAll()}</script>
+    <body>
+        <div id="div0">
+            <h2>Lista de la compra Inma y Pepe</h2>        
+            <input id="input0" type="text" value="">
+            <button id="button0">Añadir</button>        
+        </div>
+        <table id="table0">
+        </table>        
         <p id="output"></p>
     </body>
 </html>
