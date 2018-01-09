@@ -80,7 +80,7 @@ public class NoteRestController {
             notes = (List<Note>) noteRepository.findByWriter(writer);
         }
         else if(date !=null) {
-            notes = (List<Note>) noteRepository.findByDate(date);
+            notes = (List<Note>) noteRepository.findByDateOrderByTimestampAsc(date);
         }
         else {
             notes = (List<Note>) noteRepository.findAll();

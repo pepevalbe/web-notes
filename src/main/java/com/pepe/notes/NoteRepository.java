@@ -9,5 +9,5 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @RestResource(exported = false)
 public interface NoteRepository extends CrudRepository<Note, Long> {
     List<Note> findByWriter(@Param("writer") String writer);
-    List<Note> findByDate(@Param("date") Date date);    
+    List<Note> findByDateOrderByTimestampAsc(@Param("date") Date date);    
 }
